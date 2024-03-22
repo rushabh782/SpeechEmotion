@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Emotion Recognition</title>
+    <style>
+/* Basic styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('https://source.unsplash.com/random/800x600/?blue'); /* Glowing background image in blue */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Fixed background image */
+    overflow-y: scroll; /* Make the page scrollable */
+    background-color: #050c3a; /* Dark blue background color */
+}
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center; /* Center align content */
+    position: relative; /* Add relative positioning to the container */
+}
+header {
+    background-color: rgba(5, 12, 58, 0.8); /* Semi-transparent dark blue background color for the header */
+    color: #fff; /* Text color */
+    padding: 20px 0;
+    position: relative;
+}
+header nav {
+    text-align: center;
+}
+header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+header nav ul li {
+    display: inline;
+    margin-right: 40px; /* Increased spacing between header elements */
+}
+header nav ul li a {
+    color: #fff; /* Text color */
+    text-decoration: none;
+    position: relative;
+    font-size: 18px; /* Increased font size */
+}
+header nav ul li a:hover {
+    color: #0066ff; /* Hover color */
+    animation: glow 1s infinite alternate; /* Add glowing effect on hover */
+}
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #0066ff; }
+    100% { text-shadow: 0 0 20px #0066ff; }
+}
+footer {
+    background-color: rgba(5, 12, 58, 0.8); /* Semi-transparent dark blue background color for the footer */
+    color: #fff; /* Text color */
+    text-align: center;
+    padding: 20px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+footer ul li {
+    display: inline;
+    margin-right: 20px;
+}
+footer ul li a {
+    color: #fff; /* Text color */
+    text-decoration: none;
+}
+footer ul li a:hover {
+    color: #0066ff; /* Hover color */
+}
+/* Button styling */
+.start-button {
+    display: inline-block;
+    background-color: #050c3a; /* Dark blue background color */
+    color: #fff; /* Text color */
+    padding: 20px 40px; /* Increased padding */
+    border: none;
+    border-radius: 10px; /* Increased border radius */
+    font-size: 28px; /* Increased font size */
+    text-decoration: none;
+    cursor: pointer;
+    position: fixed; /* Position the button */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for centering */
+    font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
+    font-style: italic; /* Italic font style */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Added transition for smoother effect */
+}
+
+.start-button:hover {
+    background-color: #fff; /* White background color on hover */
+    color: #050c3a; /* Dark blue text color on hover */
+    animation: glow 1s infinite alternate; /* Add glowing effect on hover */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* Added box shadow on hover */
+}
+
+@keyframes glow {
+    0% { text-shadow: 0 0 5px #fff; }
+    100% { text-shadow: 0 0 20px #fff; }
+}
+
+
+/* Dropdown styling */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.profile-icon:hover .dropdown-content {
+    display: block;
+}
+
+/* Animation for profile icon */
+.profile-icon img {
+    transition: transform 0.3s;
+}
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="about_us.html">About Us</a></li>
+                <li><a href="ContactUs.html">Contact Us</a></li>
+                <li><a href="#">History</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+        <!-- Profile icon -->
+        <div class="profile-icon" onclick="toggleDropdown()">
+            <img src="profileicon.png" alt="Profile Icon" width="30">
+            <div id="dropdown-content" class="dropdown-content">
+                <a href="about_us.html">About Us</a>
+                <a href="ContactUs.html">Contact Us</a>
+                <a href="#">History</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="container">
+    <!-- Add your content here -->
+    <a href="index.html" class="start-button">START</a>
+</div>
+
+<footer>
+    <div class="container">
+        <ul>
+            <li><a href="#">Social Media</a></li>
+            <li><a href="#">Partners</a></li>
+            <li><a href="ContactUs.html">Contact Us</a></li>
+        </ul>
+        <p>&copy; 2024 Speech Emotion Recognition. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- JavaScript for toggling the slider -->
+<script>
+    function toggleSlider() {
+        var slider = document.getElementById('slider');
+        slider.classList.toggle('active');
+    }
+</script>
+
+<!-- JavaScript for scrolling and displaying info -->
+<script>
+    window.addEventListener('scroll', function() {
+        var startButton = document.querySelector('.start-button');
+        var infoContainer = document.getElementById('info-container');
+        if (window.scrollY > 100) {
+            infoContainer.classList.add('active');
+        } else {
+            infoContainer.classList.remove('active');
+        }
+    });
+</script>
+
+<!--&lt;!&ndash; Information container &ndash;&gt;-->
+<!--<div id="info-container">-->
+<!--    <div class="container">-->
+<!--        <h2>Capture the emotion behind every interaction.</h2>-->
+<!--        <p>We can communicate anytime and from anywhere, but what we’ve gained in convenience, we’ve lost in empathy. It’s why we feel so disconnected. We don’t see emotional states through a screen. We can’t read nonverbal cues online. But with Uniphore, remote conversations are about to feel a lot less distant.</p>-->
+<!--    </div>-->
+<!--</div>-->
+
+</body>
+</html>

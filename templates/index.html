@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../static/index.css" />
+    <title>Speech Emotion Recognition</title>
+    <style>
+        /* CSS to resize the logo */
+        .logo {
+            width: 600px; /* Adjust the width as needed */
+            height: 350px; /* Maintain aspect ratio */
+        }
+
+        /* CSS for footer */
+        footer {
+            position: fixed; /* Fixed position */
+            bottom: 0; /* Position at the bottom */
+            width: 100%; /* Full width */
+            background-color: transparent; /* Set background color to transparent */
+            padding: 20px; /* Add padding for better spacing */
+            text-align: center; /* Center-align text */
+            color: white; /* Set text color to white */
+            font-size: 20px; /* Increase font size */
+        }
+
+        footer p {
+            color: white; /* Set text color to white */
+            font-size: 20px; /* Increase font size */
+        }
+
+        /* CSS for positioning transcribed text */
+        #transcribedText {
+            /* Add any necessary styling for the transcribed text container */
+            margin-bottom: 150px; /* Adjust as needed to prevent footer from overlapping transcribed text */
+        }
+
+        /* CSS for menu icon */
+        #menu-icon {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+        }
+
+        /* CSS for circular profile picture */
+        .profile-pic-container {
+            display: none;
+            position: absolute;
+            top: 60px; /* Adjusted top position */
+            left: 20px; /* Adjusted left position */
+            cursor: pointer;
+        }
+
+        .profile-pic {
+            width: 100px; /* Adjusted width */
+            height: 100px; /* Adjusted height */
+            border-radius: 50%;
+            border: 2px solid #fff; /* Added border */
+        }
+
+        /* CSS for menu options */
+        .menu-options {
+            display: none;
+            position: absolute;
+            top: 200px; /* Adjusted top position */
+            left: 10px; /* Adjusted left position */
+            background-color: #000000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1; /* Ensure options are above other content */
+            width: 200px; /* Adjusted width */
+        }
+
+        /* CSS for each option */
+        .menu-option {
+            padding: 15px 0;
+            cursor: pointer;
+            color : #ffffff;
+            font-size: 25px;
+            font-weight: bold;
+            text-shadow: 0 0 10px white, 0 0 10px yellow;
+            text-align: left;
+        }
+
+        /* CSS for hover effect */
+        .menu-option:hover {
+            background: linear-gradient(to right, #2196F3, #FF69B4);
+        }
+
+        #emoji {
+            display: none;
+            bottom: 60px; /* Adjust the distance from the bottom as needed */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            z-index: 2; /* Ensure it's above the footer */
+        }
+
+        .neon-red-glow {
+        color: #ff0000; /* Neon red color */
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000, 0 0 60px #ff0000, 0 0 70px #ff0000; /* Neon red glow effect */
+        font-size: 25px; /* Adjust font size as needed */
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Menu icon -->
+    <img id="menu-icon" src="../static/Images/menu_icon.png" alt="Menu Icon">
+
+    <!-- Profile picture container -->
+    <div class="profile-pic-container">
+        <img class="profile-pic" src="../static/Images/profile_pic.jpeg" alt="Profile Picture">
+    </div>
+
+    <!-- Menu options -->
+    <div class="menu-options">
+        <!-- Profile picture above history -->
+        <div class="profile-pic-container">
+            <img class="profile-pic" src="../static/Images/profile_pic.jpeg" alt="Profile Picture">
+        </div>
+
+       <div id="userEmail" class="user-email neon-red-glow" style="display: none;"></div>
+
+        <div class="menu-option">History</div>
+        <div class="menu-option" id="aboutUsOption">About Us</div>
+        <div class="menu-option" id="contactUsOption">Contact Us</div>
+        <div class="menu-option logout" id="logoutButton">Log Out</div>
+    </div>
+
+    <div id="title" class="neon-title">Speech Emotion Recognition</div>
+    <!-- Add the logo below the title -->
+    <img src="../static/Images/logo_ser.png" alt="Speech Emotion Recognition Logo" class="logo">
+    <div class="button-container">
+        <button class="record-btn" class="recording">Record Audio</button>
+        <button class="upload-btn" class="recording">Upload Audio</button>
+    </div>
+    <button id="recordButton" class="recording">Start Recording</button>
+    <audio id="audioPlayer" controls style="display: none;"></audio>
+    <div class="file-upload-wrapper">
+      <label for="audioFileInput" class="file-upload-button">
+        <span class="file-upload-text">Choose File</span>
+        <input type="file" id="audioFileInput" accept=".wav" />
+      </label>
+    </div>
+    <audio id="audioPlayerInput" controls style="display: none;"></audio>
+    <span id="selectedFileName" class="file-selected-name"></span>
+    <button id="analyzeButton" class="recording" style="display: none;">Analyze</button>
+    <div id="emotionsDisplay" style="display: none;">
+        <p id="prediction"></p>
+    </div>
+    <span id="emoji" style="display: none;"></span>
+    <div id="transcribedText" style="display: none;"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Speech Emotion Recognition. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
+       import { getFirestore, collection, setDoc } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js";
+
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAxbGhlKrzc33viDJrLXN7SVQLlhGIKrfw",
+        authDomain: "speech-38f25.firebaseapp.com",
+        projectId: "speech-38f25",
+        storageBucket: "speech-38f25.appspot.com",
+        messagingSenderId: "293802928266",
+        appId: "1:293802928266:web:d51e61a94e2238f771e573",
+        measurementId: "G-DJ8M2ESLNB"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db =  getFirestore(app);
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const menuIcon = document.getElementById("menu-icon");
+    const profilePicContainer = document.querySelector(".profile-pic-container");
+    const menuOptions = document.querySelector(".menu-options");
+
+    // Add click event listener to menu icon
+    menuIcon.addEventListener("click", function () {
+        // Toggle display of profile picture and menu options
+        profilePicContainer.style.display = profilePicContainer.style.display === "block" ? "none" : "block";
+        menuOptions.style.display = menuOptions.style.display === "block" ? "none" : "block";
+    });
+
+    // Add click event listener to profile picture container to prevent menu options from closing
+    profilePicContainer.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent click event from bubbling up to the document
+    });
+
+    // Add click event listener to document to close menu if clicked outside
+    document.addEventListener("click", function(event) {
+        if (!menuIcon.contains(event.target) && !menuOptions.contains(event.target)) {
+            profilePicContainer.style.display = "none";
+            menuOptions.style.display = "none";
+        }
+    });
+
+    // Add click event listener to logout button
+    const logoutButton = document.getElementById("logoutButton");
+    logoutButton.addEventListener("click", function() {
+        // Redirect to the logout route
+        window.location.href = "/logout";
+    });
+
+    // Add click event listener to about us option
+    const aboutUsOption = document.getElementById("aboutUsOption");
+    aboutUsOption.addEventListener("click", function() {
+        // Redirect to the about_us.html page
+        window.location.href = "/about_us";
+    });
+
+    // Add click event listener to contact us option
+    const contactUsOption = document.getElementById("contactUsOption");
+    contactUsOption.addEventListener("click", function() {
+        // Redirect to the contact_us.html page
+        window.location.href = "/contact_us";
+    });
+
+    // Set user email content
+    const userEmailDiv = document.getElementById("userEmail");
+    const userEmail = sessionStorage.getItem("userEmail");
+    userEmailDiv.textContent = userEmail;
+    userEmailDiv.style.display = "block";
+});
+
+
+    </script>
+
+    <script src="../static/index.js" type="module"></script>
+</body>
+</html>

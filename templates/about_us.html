@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, black, blue);
+        }
+        header {
+            background: #1976D2;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            color: white;
+        }
+        .glowing-text {
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 0 0 10px white, 0 0 10px yellow;
+            text-align: center;
+            margin-bottom: 50px; /* Add spacing below the glowing text */
+        }
+        .description {
+            font-size: 18px;
+            margin-top: 10px;
+            margin-bottom: 60px;
+            text-align: center;
+            padding: 0 200px;
+        }
+        .team {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .person-container {
+            width: 200px;
+            height: 300px;
+            background-color: grey;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 60px;
+        }
+        .person-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            text-shadow: 0 0 20px blue; /* Increased blur radius for more glow */
+        }
+
+
+        .person-info span {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glowing-text">Welcome to Speech Emotion Recognition HUB</div>
+        <div class="description">
+            Welcome to the Speech Emotion Recognition HUB! We're your go-to destination for understanding emotions in speech. Our tools analyze speech to recognize feelings, helping in various areas like customer service or mental health. Whether you're creating voice-controlled apps or studying emotions, our user-friendly tech makes it easy. Discover the power of emotion analysis with us today!
+        </div>
+        <div style="margin-bottom: 20px;"></div> <!-- Add spacing below the description -->
+        <div class="glowing-text">Our Team</div>
+        <div class="team">
+            <div class="person-container" style="background-image: url('../static/Images/nikson.jpg');">
+                <div class="person-info">
+                    <span>Name: Nikson Nadar</span>
+                    <span>Age: 20</span>
+                </div>
+            </div>
+            <div class="person-container" style="background-image: url('../static/Images/rushabh.jpg');">
+                <div class="person-info">
+                    <span>Name: Rushabh Patel</span>
+                    <span>Age: 20</span>
+                </div>
+            </div>
+            <div class="person-container" style="background-image: url('../static/Images/sahil.jpg');">
+                <div class="person-info">
+                    <span>Name: Sahil Vartak</span>
+                    <span>Age: 20</span>
+                </div>
+            </div>
+            <div class="person-container" style="background-image: url('../static/Images/lillian.jpg');">
+                <div class="person-info">
+                    <span>Name: Lillian Rodrigues</span>
+                    <span>Age: 20</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

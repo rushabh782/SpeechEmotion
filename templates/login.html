@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authentication Page</title>
+  <link rel="stylesheet" href="../static/login.css">
+  <style>
+    /* CSS for hiding the sign-up form by default */
+    #signup-form {
+      display: none;
+    }
+    /* CSS for styling the success message */
+    #signup-success-message {
+      text-align: center;
+      margin-top: 10px;
+      color: green;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>SPEECH EMOTION RECOGNITION</h1>
+  <div class="login-container">
+    <h2 id="form-title">LOGIN PAGE</h2>
+    <form id="login-form">
+      <div class="form-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" name="login-email" required>
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" name="login-password" required>
+      </div>
+      <div class="button-group">
+        <button type="submit">Login</button>
+        <button type="button" id="show-signup">Sign Up</button>
+      </div>
+    </form>
+
+    <!-- Sign-up form -->
+    <form id="signup-form">
+      <!-- Remove the SIGN UP text -->
+      <div class="form-group">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="signup-email" required>
+      </div>
+      <div class="form-group">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="signup-password" required>
+      </div>
+      <div class="button-group">
+        <button type="button" id="cancel-signup">Cancel</button>
+        <button type="submit">Sign Up</button>
+      </div>
+    </form>
+
+    <!-- Success message for sign up -->
+    <div id="signup-success-message">Sign up successful!</div>
+  </div>
+  <!-- Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js"></script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAxbGhlKrzc33viDJrLXN7SVQLlhGIKrfw",
+      authDomain: "speech-38f25.firebaseapp.com",
+      projectId: "speech-38f25",
+      storageBucket: "speech-38f25.appspot.com",
+      messagingSenderId: "293802928266",
+      appId: "1:293802928266:web:d51e61a94e2238f771e573",
+      measurementId: "G-DJ8M2ESLNB"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Show sign-up form and hide login form when "Sign Up" button is clicked
+    document.getElementById("show-signup").addEventListener("click", function() {
+      // Hide login form and display signup form
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("signup-form").style.display = "block";
+      document.getElementById("signup-success-message").style.display = "none"; // Hide success message
+
+      // Change text content of the form title to "SIGN UP PAGE"
+      document.getElementById("form-title").textContent = "SIGN UP PAGE";
+    });
+
+    // Hide sign-up form and show login form when "Cancel" button is clicked
+    document.getElementById("cancel-signup").addEventListener("click", function() {
+      document.getElementById("signup-form").style.display = "none";
+      document.getElementById("login-form").style.display = "block";
+      document.getElementById("signup-success-message").style.display = "none"; // Hide success message
+      document.getElementById("form-title").textContent = "Login Page"; // Reset form title
+    });
+
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // prevent form submission
+
+      // Get input values
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+
+      // Sign in
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+
+          sessionStorage.setItem("userEmail", user.email);
+
+          // Redirect to home page
+           window.location.href = "/home";
+        })
+        .catch((error) => {
+          alert("Invalid email or password. Please try again.");
+        });
+    });
+
+    document.getElementById("signup-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // prevent form submission
+
+      // Get input values
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
+
+      // Sign up
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed up
+          document.getElementById("signup-success-message").style.display = "block"; // Show success message
+          document.getElementById("form-title").textContent = "Login Page"; // Reset form title
+          window.location.href = "home"; // Redirect after sign up if needed
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    });
+  </script>
+</body>
+</html>

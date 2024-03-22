@@ -1,0 +1,259 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #031321;
+    font-family: consolas;
+}
+
+.neon-title {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    color: #ff6ac1; /* Neon Pink color */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 24px;
+    overflow: hidden;
+    transition: 0.02s; /* Shortened transition time */
+}
+
+.neon-title:hover {
+    color: #ff1493; /* Darker Neon Pink color */
+    text-shadow: 0 0 10px #ff1493, 0 0 40px #ff1493, 0 0 80px #ff1493;
+    transition-delay: 0.2s; /* Adjusted transition delay */
+}
+
+button {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    color: #2196f3;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 24px;
+    overflow: hidden;
+    transition: 0.2s;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+button:hover {
+    color: #255784;
+    background: #2196f3;
+    box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
+    transition-delay: 0.2s; /* Adjusted transition delay */
+}
+
+button span {
+    position: absolute;
+    display: block;
+}
+
+button span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #2196f3);
+}
+
+button:hover span:nth-child(1) {
+    left: 100%;
+    transition: 0.2s; /* Shortened transition time */
+}
+
+button span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #2196f3);
+}
+
+button:hover span:nth-child(3) {
+    right: 100%;
+    transition: 0.2s; /* Shortened transition time */
+    transition-delay: 0.1s; /* Adjusted transition delay */
+}
+
+button span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #2196f3);
+}
+
+button:hover span:nth-child(2) {
+    top: 100%;
+    transition: 0.2s; /* Shortened transition time */
+    transition-delay: 0.05s; /* Adjusted transition delay */
+}
+
+button span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #2196f3);
+}
+
+button:hover span:nth-child(4) {
+    bottom: 100%;
+    transition: 0.2s; /* Shortened transition time */
+    transition-delay: 0.15s; /* Adjusted transition delay */
+}
+
+audio {
+    margin-top: 20px;
+}
+
+#emotionsDisplay {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    color: #2196f3; /* Blue color */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 24px;
+    overflow: hidden;
+    transition: 0.2s; /* Shortened transition time */
+    margin-top: 20px; /* Adjust as needed */
+}
+
+#partial_prediction {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    color: #2196f3; /* Blue color */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 24px;
+    overflow: hidden;
+    margin-top: 20px; /* Adjust as needed */
+}
+
+#emotionsDisplay:hover {
+    color: #255784; /* Darker blue color */
+    text-shadow: 0 0 10px #255784, 0 0 40px #255784, 0 0 80px #255784;
+    transition-delay: 0.2s; /* Adjusted transition delay */
+}
+
+#transcribedText {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic; /* Change font style to italic */
+    font-size: 20px;
+    line-height: 1.6;
+    color: #007bff; /* Blue text color */
+    background-color: transparent; /* Remove background color */
+    padding: 0; /* Remove padding */
+    border: none; /* Remove border */
+    margin-top: 20px;
+    transition: color 0.3s;
+}
+
+#transcribedText::selection {
+    background-color: #ffa931; /* Orange selection color */
+    color: #fff; /* White selection text color */
+}
+
+#transcribedText:hover {
+    color: #0056b3; /* Darker blue text color on hover */
+    transform: scale(1.05); /* Slightly scale up on hover */
+    transition: color 0.3s, transform 0.2s ease-out;
+}
+
+#emoji {
+    margin-bottom: 20px;
+    font-size: 50px; /* Adjust the font size as needed */
+}
+
+/* Styling for file input */
+input[type="file"] {
+  display: none; /* Hide the default file input */
+}
+
+.recording {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  margin-bottom: 20px;
+}
+
+.file-upload-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.file-upload-button {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    color: #2196f3;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 24px;
+    overflow: hidden;
+    transition: 0.2s;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.file-upload-button:hover {
+    color: #255784;
+    background: #2196f3;
+    box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
+    transition-delay: 0.2s; /* Adjusted transition delay */
+}
+
+/* Styling for audio player */
+#audioPlayerInput {
+  display: none; /* Hide the audio player by default */
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Show the selected file name */
+.file-selected-name {
+  display: none;
+  margin-top: 20px;
+  font-style: bold;
+  color: red;
+  font-size: 20px;
+  line-height: 1.6;
+  transition: color 0.3s;
+}
+
+.file-selected-name::selection {
+    background-color: #ffa931; /* Orange selection color */
+    color: #fff; /* White selection text color */
+}
+
+.file-selected-name:hover {
+    color: #800000; /* Darker red text color on hover */
+    transform: scale(1.05); /* Slightly scale up on hover */
+    transition: color 0.3s, transform 0.2s ease-out;
+}
+
+#button-container {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.file-upload-wrapper {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}

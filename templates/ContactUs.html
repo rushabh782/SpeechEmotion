@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome for icons -->
+    <style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('../static/Images/contacts.png'); /* Path to your background image */
+    background-size: cover;
+    background-position: center;
+}
+
+        .container {
+            width: 100%;
+            max-width: 800px; /* Adjusted maximum width */
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 12px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #2196F3;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="text"], textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+        }
+        input[type="submit"] {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        input[type="submit"]:hover {
+            background-color: #0b7dda;
+        }
+        #messageSent {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+            display: none;
+        }
+        .icon {
+            position: relative;
+            top: 5px;
+            margin-right: 5px;
+        }
+        .info-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1><i class="fas fa-envelope icon"></i>Contact Our Support Team</h1>
+    </div>
+    <p class="info-text">Do you have questions, feedback, or need assistance? We're here to help. Please fill out the form below, and our support team will get back to you promptly.</p>
+    <form id="contactForm">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email Address:</label>
+        <input type="text" id="email" name="email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+
+        <input type="submit" value="Send Message">
+    </form>
+    <div id="messageSent">
+        <p>Message sent successfully.</p>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAxbGhlKrzc33viDJrLXN7SVQLlhGIKrfw",
+        authDomain: "speech-38f25.firebaseapp.com",
+        projectId: "speech-38f25",
+        storageBucket: "speech-38f25.appspot.com",
+        messagingSenderId: "293802928266",
+        appId: "1:293802928266:web:d51e61a94e2238f771e573",
+        measurementId: "G-DJ8M2ESLNB"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // Firestore instance
+    const db = getFirestore(app);
+
+    document.getElementById("contactForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const message = formData.get('message');
+
+        try {
+            const docRef = await addDoc(collection(db, "contacts"), {
+                name: name,
+                email: email,
+                message: message
+            });
+            console.log("Document written with ID: ", docRef.id);
+
+            document.getElementById("contactForm").reset();
+            document.getElementById("messageSent").style.display = "block";
+            setTimeout(function(){
+                document.getElementById("messageSent").style.display = "none";
+            }, 3000);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    });
+</script>
+
+</body>
+</html>
